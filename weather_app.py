@@ -1,19 +1,18 @@
 import streamlit as st
 import requests
 
-st.title("Weather Search for Different Cities")
-
-city = st.text_input("請輸入城市名稱 (英文，例如 Taipei):")
+st.title('天氣查詢APP')
+city = st.text_input('請輸入一個城市')
 
 if city:
-    st.write(f"正在搜尋 {city} 的天氣...")
+    url = f'https://wttr.in/{city}?format=j1'
+    read = requests.get(url)
 
-    url = f"https://wttr.in/{city}?format=j1"
-    response = requests.get(url)
-    data = response.json()
-
-    temp = data['current_condition'][0]['temp_C']
-    desc = data['current_condition'][0]['weatherDesc'][0]['value']
-
-    st.success(f"{city} 目前溫度: {temp}°C")
-    st.info(f"天氣狀況: {desc}")
+    if read.status_code == 200:
+        data = read.json()
+        temp = data['current_condition'][0]['temp_C']
+        desc = data['current_condition'][0]['weatherDesc'][0]['value']
+        st.success(f'目前{city}的溫度為{temp}，天氣狀況為{desc}')
+        st.info('謝謝您的查詢')
+    else:
+        st.error('查無此城市')
