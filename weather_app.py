@@ -29,17 +29,17 @@ def parse_weather_data(data):
 
 st.title('天氣小管家')
 city = st.text_input('What city do you want to search')
-if st.button("查詢"): # 按下按鈕才開始跑
+if st.button("查詢"): 
 
-    if city:  # 如果 city 不是空的
-        raw_data = get_weather_cwa(city) # 呼叫函數，就像派人去執行任務
-        if raw_data:  # 如果拿到了資料
+    if city:  
+        raw_data = get_weather_cwa(city) 
+        if raw_data: 
             result = parse_weather_data(raw_data)
             st.write(result)
             st.success('Your searching is success.')
-            # 繼續往下走
-        else:  # 如果沒拿到 (None)
-            st.error("API 連線失敗")  # 對應你的「報Error 查無資料」
 
-    else:  # 否則
-        st.warning("請先輸入縣市")  # 對應你的「報Error 查無城市」
+        else:  
+            st.error("API 連線失敗") 
+
+    else: 
+        st.warning("請先輸入縣市") 
